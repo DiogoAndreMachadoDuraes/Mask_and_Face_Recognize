@@ -16,19 +16,19 @@ X_test = pca.transform(X_test)
 
 knn = functions.knn(X_train, y_train)
 
-diogo_image = face_recognition.load_image_file(f"img/pessoas/Diogo.jpg")
-andreia_image = face_recognition.load_image_file(f"img/pessoas/Andreia.jpg")
+person1_image = face_recognition.load_image_file(f"img/persons/person1.jpg")
+person2_image = face_recognition.load_image_file(f"img/persons/person2.jpg")
 
-diogo_encoding = face_recognition.face_encodings(diogo_image)[0]
-andreia_encoding = face_recognition.face_encodings(andreia_image)[0]
+person1_encoding = face_recognition.face_encodings(person1_image)[0]
+person2_encoding = face_recognition.face_encodings(person2_image)[0]
 
 known_face_encodings = [
-    diogo_encoding,
-    andreia_encoding
+    person1_encoding,
+    person2_encoding
 ]
 known_face_names = [
-    "Diogo",
-    "Andreia"
+    "Person 1",
+    "Person 2"
 ]
 
 face_locations = []
@@ -38,8 +38,8 @@ process_this_frame = True
 
 
 label = {
-    0: "Esta sem mascara",
-    1: "Esta com mascara"
+    0: "You are wearing a mask",
+    1: "You are not wearing a mask"
 }
 
 while True:
@@ -102,11 +102,11 @@ while True:
                     font = cv.FONT_HERSHEY_DUPLEX
                     cv.putText(frame, name, (left , bottom - 6), font, 1.0, (255, 255, 255), 1)
                     cv.putText(frame, result, (left + 6 , top - 10), font, 0.5, (255, 255, 255), 2)
-                    cv.putText(frame, f"{len(faces)} rostos identificados",(20, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2, cv.LINE_AA)
+                    cv.putText(frame, f"{len(faces)} identified faces",(20, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2, cv.LINE_AA)
 
             elif pred == 1:
                 cv.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2)
                 cv.putText(frame, result, (x + 20,y + h - 250), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-                cv.putText(frame, f"{len(faces)} rostos identificados",(20, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2, cv.LINE_AA)
+                cv.putText(frame, f"{len(faces)} identified faces",(20, 20), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2, cv.LINE_AA)
                 
     cv.imshow("Recognizer", frame)
